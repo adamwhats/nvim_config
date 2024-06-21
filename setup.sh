@@ -23,14 +23,6 @@ if ! command_exists curl; then
 	exit 1
 fi
 
-# Check if git is installed
-if ! command_exists git; then
-	print_info "Installing Git..."
-	sudo apt install -y git
-else
-	print_info "Git is already installed. Skipping installation."
-fi
-
 # Check if lazygit is installed
 if ! command_exists lazygit; then
 	print_info "Installing Lazygit..."
