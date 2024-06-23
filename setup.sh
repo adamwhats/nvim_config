@@ -36,7 +36,7 @@ else
 fi
 
 # Navigate to the repository directory
-REPO_DIR=~/nvim_config
+REPO_DIR=~/Documents/scripts/nvim_config
 
 print_info "Updating package lists..."
 sudo apt update
@@ -67,7 +67,7 @@ rm nvim-linux64.tar.gz
 #Copy over neovim config
 print_info "Setting up Neovim configuration..."
 mkdir -p ~/.config/nvim
-cp -r ~/nvim_config/nvim/* ~/.config/nvim/
+cp -r ${REPO_DIR}/nvim/* ~/.config/nvim/
 
 # Check if gcc is installed
 if ! command_exists gcc; then
@@ -92,6 +92,13 @@ if ! command_exists fd; then
 else
 	print_info "fd-find (fd) is already installed. Skipping installation."
 fi
+
+# Install Fira Code nerd fonts
+print_info "Installing Fira Code nerd font..."
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
+sudo unzip FiraCode.zip -d /usr/local/share/fonts/
+fc-cache -fv
+rm FiraCode.zip
 
 # Print completion message
 print_info "Setup complete! Neovim v${NEOVIM_VERSION} and all dependencies have been installed."
