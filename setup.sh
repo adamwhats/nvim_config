@@ -35,9 +35,6 @@ else
 	print_info "Lazygit is already installed. Skipping installation"
 fi
 
-# Navigate to the repository directory
-REPO_DIR=~/Documents/scripts/nvim_config
-
 print_info "Updating package lists..."
 sudo apt update
 
@@ -52,7 +49,7 @@ sudo apt install -y \
 if command_exists nvim; then
 	print_info "Uninstalling existing Neovim..."
 	sudo apt remove --purge neovim -y
-	sudo rm -rf /usr/local/nvim/ /usr/local/bin/nvim ~/.config/nvim
+	sudo rm -rf /usr/local/nvim/ /usr/local/bin/nvim
 fi
 
 # Neovim installation from GitHub release
@@ -63,11 +60,6 @@ tar xzf nvim-linux64.tar.gz
 sudo mv nvim-linux64 /usr/local/nvim/
 sudo ln -sf /usr/local/nvim/bin/nvim /usr/local/bin/nvim
 rm nvim-linux64.tar.gz
-
-#Copy over neovim config
-print_info "Setting up Neovim configuration..."
-mkdir -p ~/.config/nvim
-cp -r ${REPO_DIR}/nvim/* ~/.config/nvim/
 
 # Check if gcc is installed
 if ! command_exists gcc; then
@@ -86,7 +78,7 @@ else
 fi
 
 # Check if fd is installed
-if ! command_exists fd; then
+if ! command_exists fdfind; then
 	print_info "Installing fd-find (fd)..."
 	sudo apt install -y fd-find
 else
@@ -94,11 +86,15 @@ else
 fi
 
 # Install Fira Code nerd fonts
-print_info "Installing Fira Code nerd font..."
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
-sudo unzip FiraCode.zip -d /usr/local/share/fonts/
-fc-cache -fv
-rm FiraCode.zip
+if ! [ $(ls /usr/local/share/fonts/FiraCode* 2>/dev/null | wc -l) -gt 0 ]; then
+	print_info "Installing Fira Code nerd font..."
+	wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
+	sudo unzip FiraCode.zip -d /usr/local/share/fonts/
+	fc-cache -fv
+	rm FiraCode.zip
+else
+	print_info "Fira Code nerd font is already installed. Skipping installation."
+fi
 
 # Print completion message
 print_info "Setup complete! Neovim v${NEOVIM_VERSION} and all dependencies have been installed."
