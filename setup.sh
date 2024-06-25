@@ -81,7 +81,3 @@ print_info "You can start Neovim by running 'nvim' in your terminal."
 
 # Instructions for user
 echo -e "\033[1;34mTo use the setup, ensure your terminal emulator supports the configured fonts and settings.\033[0m"
-
-# Launch Neovim
-print_info "Launching Neovim..."
-nvim
