@@ -14,7 +14,7 @@ return {
           null_ls.builtins.diagnostics.mypy.with({
             extra_args = function()
               local virtual = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX") or "/usr"
-              return { "--python-executable", virtual .. "/bin/python3" }
+              return { "--python-executable", virtual .. "/bin/python3", "--config-file", "~/.config/nvim/mypy.ini" }
             end,
           }),
           null_ls.builtins.diagnostics.pylint.with({
