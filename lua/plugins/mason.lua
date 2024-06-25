@@ -1,24 +1,38 @@
 return {
-  -- Add mason and mason-lspconfig
   {
-    "williamboman/mason.nvim",
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function()
-      require("mason").setup()
+      require("mason-tool-installer").setup({
+        ensure_installed = {
+          "cmakelang",
+          "cmakelint",
+          "clangd",
+          "clang-format",
+          "codelldb",
+          "black",
+          "mypy",
+          "pylint",
+          "pyright",
+        },
+        automatic_installation = true,
+      })
     end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = { "pyright" }, -- Ensure pyright is installed
-      })
+      require("mason-lspconfig").setup({})
     end,
   },
-  -- Add nvim-lspconfig
   {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require("lspconfig")
-    end,
+    "jay-babu/mason-nvim-dap.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "mfussenegger/nvim-dap",
+    },
+    opts = {
+      handlers = {},
+    },
   },
 }
