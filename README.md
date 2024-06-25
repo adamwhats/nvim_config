@@ -13,4 +13,5 @@ chmod +x setup.sh
 - C++ support (clangd, clang-format & codelldb)
 - Cmake-tools
 - Live markdown preview
+- ToggleTerm
 
