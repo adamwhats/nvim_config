@@ -42,8 +42,11 @@ print_info "Installing prerequisites..."
 sudo apt install -y \
 	build-essential \
 	curl \
+	fd-find \
+	gcc \
+	ripgrep \
 	unzip \
-	fontconfig
+	xclip
 
 # Check if Neovim is already installed and uninstall if necessary
 if command_exists nvim; then
@@ -61,39 +64,15 @@ sudo mv nvim-linux64 /usr/local/nvim/
 sudo ln -sf /usr/local/nvim/bin/nvim /usr/local/bin/nvim
 rm nvim-linux64.tar.gz
 
-# Check if gcc is installed
-if ! command_exists gcc; then
-	print_info "Installing C compiler (gcc)..."
-	sudo apt install -y gcc
-else
-	print_info "C compiler (gcc) is already installed. Skipping installation."
-fi
-
-# Check if ripgrep is installed
-if ! command_exists rg; then
-	print_info "Installing ripgrep (rg)..."
-	sudo apt install -y ripgrep
-else
-	print_info "ripgrep (rg) is already installed. Skipping installation."
-fi
-
-# Check if fd is installed
-if ! command_exists fdfind; then
-	print_info "Installing fd-find (fd)..."
-	sudo apt install -y fd-find
-else
-	print_info "fd-find (fd) is already installed. Skipping installation."
-fi
-
-# Install Fira Code nerd fonts
-if ! [ $(ls /usr/local/share/fonts/FiraCode* 2>/dev/null | wc -l) -gt 0 ]; then
-	print_info "Installing Fira Code nerd font..."
-	wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
-	sudo unzip FiraCode.zip -d /usr/local/share/fonts/
+# Install JetBrains Mono nerd fonts
+if ! [ $(ls /usr/local/share/fonts/JetBrains* 2>/dev/null | wc -l) -gt 0 ]; then
+	print_info "Installing JetBrains Mono nerd font..."
+	wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip
+	sudo unzip JetBrainsMono.zip -d /usr/local/share/fonts/
 	fc-cache -fv
-	rm FiraCode.zip
+	rm JetBrainsMono.zip
 else
-	print_info "Fira Code nerd font is already installed. Skipping installation."
+	print_info "JetBrains Mono nerd font is already installed. Skipping installation."
 fi
 
 # Print completion message
