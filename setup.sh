@@ -17,12 +17,6 @@ command_exists() {
 	command -v "$1" >/dev/null 2>&1
 }
 
-# Check if curl is installed
-if ! command_exists curl; then
-	print_error "curl is required but not installed. Please install curl first."
-	exit 1
-fi
-
 # Check if lazygit is installed
 if ! command_exists lazygit; then
 	print_info "Installing Lazygit..."
@@ -44,9 +38,14 @@ sudo apt install -y \
 	curl \
 	fd-find \
 	gcc \
+	python3-venv \
 	ripgrep \
 	unzip \
 	xclip
+
+print_info "Installing nodejs 20.15"
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
 
 # Check if Neovim is already installed and uninstall if necessary
 if command_exists nvim; then
